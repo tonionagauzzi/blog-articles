@@ -15,26 +15,52 @@ style: |
 
 ---
 
-## 本日のトピック
+## 話すこと
 
-1. Jetpack Composeでの自動入力（オートフィル）の実装方法
+1. Jetpack Composeでの自動入力の実装方法
+  - 自動入力とは？
   - 従来のXML方式との違い
   - 自動入力の種類（保存済みパスワード・新規パスワード）
 2. パスワード保存の罠と解決策
 
 ---
 
-## 1. Jetpack Composeでの自動入力（オートフィル）の実装方法
+## 話さないこと
+
+- パスワードマネージャーの導入方法
 
 ---
 
-## 自動入力（オートフィル）とは？
+## 登壇者情報
+- トニオ（[@tonionagauzzi](https://x.com/tonionagauzzi)）
+- Androidエンジニア
+- サイボウズ株式会社 kintone開発チーム
+- [ブログ](https://dribit.hatenablog.com/)書くのが趣味
 
-- パスワード入力欄にカーソルを当てると保存済みパスワードを自動入力
-- ユーザーの入力を効率化し、UX向上に貢献
-- セキュリティ面でも重要な機能
+![bg right:40%](./img/tonio.jpg)
 
-![height:150px center](./img/20250305215145.png)
+---
+
+## 1. Jetpack Composeでの自動入力の実装方法
+
+---
+
+## 自動入力とは？
+
+- パスワード入力欄にカーソルを当てると自動でパスワードを入れてくれる機能
+- ユーザーの入力を効率化、セキュリティ面も強化できる
+
+---
+
+### Google パスワードマネージャーによるパスワード自動入力<sup>[1](https://www.android.com/intl/ja_jp/articles/176/#sub-section-4-3)</sup>
+
+![height:400px center](./img/20250428172302.png)
+
+---
+
+### Google パスワードマネージャーによる強力なパスワードの自動生成<sup>[2](https://www.android.com/intl/ja_jp/articles/176/#sub-section-4-4)</sup>
+
+![height:400px center](./img/20250428173005.png)
 
 ---
 
@@ -55,7 +81,8 @@ style: |
 
 ## Compose での実装方法
 
-- Compose UI 1.8.0以降がおすすめ。[2025/4/23 に正式版が出た！](https://developer.android.com/jetpack/androidx/releases/compose-ui?hl=ja#1.8.0)
+- Compose UI 1.8.0以降がおすすめ
+  - [2025/4/23 に正式リリース](https://developer.android.com/jetpack/androidx/releases/compose-ui?hl=ja#1.8.0)
 
 ```kotlin
 // build.gradle.kts(:app)
@@ -64,13 +91,14 @@ dependencies {
 }
 ```
   - 1.7.x以下では`AutofillType`（deprecated）を使う必要あり
-  - 実験的APIで正常に機能しないことも
+    - 実験的APIで正常に機能しないことも
 
 ---
 
 ## Composeでの自動入力実装
 
 ```kotlin
+// SomeComposable.kt
 Column {
     TextField(
         value = username.value,
@@ -150,7 +178,7 @@ Button(onClick = { autofillManager?.commit() }) {
 Composeのパスワード自動保存には厳しい条件がある：
 
 1. **NewUsernameとNewPasswordの両方が1つのComposable内に存在**
-2. **ユーザーが1.の両方を操作したこと**
+2. **ユーザーが1.の両方を操作した**
 
 これらを満たさない場合、パスワード保存ダイアログは表示されない。
 - [参考: Google Issue Tracker](https://issuetracker.google.com/issues/176949051#comment60)
@@ -204,6 +232,7 @@ dependencies {
 
 ## 参考リンク
 
+- [スマホでパスワード管理ができる Google パスワード マネージャーの使い方](https://www.android.com/intl/ja_jp/articles/176/)
 - [Composeでのテキスト自動入力](https://developer.android.com/develop/ui/compose/text/autofill?hl=ja)
 - [Autofill フレームワーク](https://developer.android.com/guide/topics/text/autofill?hl=ja)
 - [CredentialManager API](https://developer.android.com/jetpack/androidx/releases/credentials) 
